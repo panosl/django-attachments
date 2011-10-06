@@ -3,6 +3,7 @@ from attachments.forms import AttachmentForm
 from attachments.views import add_url_for_obj
 from django.core.urlresolvers import reverse
 from attachments.models import Attachment
+from attachments import MEGABYTE
 
 register = Library()
 
@@ -95,6 +96,7 @@ def get_attachments_for(parser, token):
     }
     return AttachmentsForObjectNode(**args)
 
+
 class AttachmentsSizeForObjectNode(Node):
     def __init__(self, obj, var_name):
         self.obj = obj
@@ -108,10 +110,9 @@ class AttachmentsSizeForObjectNode(Node):
             return Variable(var).resolve(context)
 
     def render(self, context):
-        MEGABYTE = 1048576.0
         obj = self.resolve(self.obj, context)
         var_name = self.resolve(self.var_name, context)
-        context[var_name] = Attachment.objects.attachments_size_for_object(obj) / MEGABYTE
+        context[var_name] = Attachment.objects.attachments_size_for_object(obj)
         return ''
 
 

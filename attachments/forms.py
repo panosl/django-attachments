@@ -25,7 +25,6 @@ class AttachmentForm(forms.ModelForm):
         fields = ('attachment_file',)
 
     def save(self, request, obj, *args, **kwargs):
-        MEGABYTE = 1048576.0
         self.instance.creator = request.user
         self.instance.content_type = ContentType.objects.get_for_model(obj)
         self.instance.object_id = obj.id
