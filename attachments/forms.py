@@ -11,24 +11,21 @@ class AttachmentForm(forms.ModelForm):
     def clean(self):
         data = self.cleaned_data.get('attachment_file')
         try:
-			#allowed_types = tuple(settings.ALLOWED_TYPES.split(' '))
             allowed_types = tuple(settings.ALLOWED_TYPES.split(' '))
-            print allowed_types
-            print data.name.lower().endswith(allowed_types)
             if not data.name.lower().endswith(allowed_types):
                 raise forms.ValidationError(_('Filetype not allowed.'))
         except AttributeError:
             pass
-        super(AttachmentForm, self).clean()
+        if settings.MAX_QUOTA and data._size > settings.MAX_QUOTA:
+            raise forms.ValidationError(_('You are exceeding your allowed space.'))
         return self.cleaned_data
             
-	
-
     class Meta:
         model = Attachment
         fields = ('attachment_file',)
 
     def save(self, request, obj, *args, **kwargs):
+        MEGABYTE = 1048576.0
         self.instance.creator = request.user
         self.instance.content_type = ContentType.objects.get_for_model(obj)
         self.instance.object_id = obj.id

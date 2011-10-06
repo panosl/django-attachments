@@ -8,17 +8,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-attachments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-27 23:52+0200\n"
+"POT-Creation-Date: 2011-10-05 16:32+0300\n"
 "PO-Revision-Date: 2010-04-04 00:24+0100\n"
 "Last-Translator: Martin Mahner <martin@mahner.org>\n"
 "Language-Team: da <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:7
+#: forms.py:9
 msgid "Upload attachment"
 msgstr "Upload vedhæftning"
+
+#: forms.py:19
+msgid "Filetype not allowed."
+msgstr ""
 
 #: models.py:29
 msgid "creator"
@@ -51,4 +56,3 @@ msgstr "Tilføj vedhæftning"
 #: templates/attachments/delete_link.html:2
 msgid "Delete attachment"
 msgstr "Slet vedhæftning"
-

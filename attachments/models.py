@@ -6,11 +6,23 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 
+
 class AttachmentManager(models.Manager):
     def attachments_for_object(self, obj):
         object_type = ContentType.objects.get_for_model(obj)
         return self.filter(content_type__pk=object_type.id,
                            object_id=obj.id)
+
+    def attachments_size_for_object(self, obj):
+        object_type = ContentType.objects.get_for_model(obj)
+        attachments = self.filter(content_type__pk=object_type.id,
+                           object_id=obj.id)
+	total = 0
+	for att in attachments:
+		total += att.attachment_file.size
+	
+	return total
+
 
 class Attachment(models.Model):
     def attachment_upload(instance, filename):
