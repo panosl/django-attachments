@@ -16,8 +16,11 @@ class AttachmentForm(forms.ModelForm):
                 raise forms.ValidationError(_('Filetype not allowed.'))
         except AttributeError:
             pass
-        if settings.MAX_QUOTA and data._size > settings.MAX_QUOTA:
-            raise forms.ValidationError(_('You are exceeding your allowed space.'))
+        try:
+            if settings.MAX_QUOTA and data._size > settings.MAX_QUOTA:
+                raise forms.ValidationError(_('You are exceeding your allowed space.'))
+        except AttributeError:
+            pass
         return self.cleaned_data
             
     class Meta:
